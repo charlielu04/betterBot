@@ -1,16 +1,18 @@
-# This is a sample Python script.
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
+options = Options()
+options.headless = True
+options.add_argument('window-size=1920x1080')
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('Charlie! You should be able to see this.')
+    print('Charlie! You should be able to see this.')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
