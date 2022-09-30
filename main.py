@@ -23,6 +23,7 @@ def shouldBet(site1, site2):
     odds2 = (calc_odds(site2[0]), calc_odds(site2[1]))
 
     # calculates if implied prob is less than 1
+    # split if statement this way so that bet_amount always corresponds x[0] to site 1 and x[1] to site 2
     if 1 / odds1[0] + 1 / odds2[1] < 1:
         x = bet_amount(odds1[0], odds2[1])
         print("If you bet $100, you should bet " + str(x[0]) + " in team 1 on site 1 and " + str(x[1]) + " in team 2 on"
