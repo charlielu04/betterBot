@@ -6,13 +6,88 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-
 options = Options()
 options.headless = True
 options.add_argument('window-size=1920x1080')
 
+""" Decides whether or not you should bet, prints bet amount and winnings if any
+
+:param site1, site2: American odds from each site
+:type site1, site2: tuple
+:returns: True for should bet, False for should not bet
+:rtype: boolean
+"""
+def shouldBet(site1, site2):
+    # calculates decimal odds given American odds and stores in tuple
+    odds1 = (calc_odds(site1[0]), calc_odds(site1[1]))
+    odds2 = (calc_odds(site2[0]), calc_odds(site2[1]))
+
+    # calculates if implied prob is less than 1
+    if 1 / odds1[0] + 1 / odds2[1] < 1:
+        x = bet_amount(odds1[0], odds2[1])
+        print("If you bet $100, you should bet " + str(x[0]) + " in team 1 on site 1 and " + str(x[1]) + " in team 2 on"
+              + " site 2 for a " + str(calcWinnings(odds1[0], odds2[1])) + " dollar winning, which is a "
+              + str(calcWinningsP(odds1[0], odds2[1])) + "% increase.")
+        return True
+    elif 1 / odds1[1] + 1 / odds2[0] < 1:
+        x = bet_amount(odds1[1], odds2[0])
+        print("If you bet $100, you should bet " + str(x[0]) + " in team 2 on site 1 and " + str(x[1]) + " in team 1 on"
+              + " site 2 for a " + str(calcWinnings(odds1[1], odds2[0])) + " dollar winning, which is a "
+              + str(calcWinningsP(odds1[1], odds2[0])) + "% increase.")
+        return True
+    return False
+
+
+""" Calculates decimal odd given American odd for a single team
+:param money: American odd from website for a single team
+:type money: double 
+:returns: Decimal odds for a single team
+:rtype: double
+"""
+def calc_odds(money):
+    return (-money + 100) / (-money) if money < 0 else (money + 100) / 100
+
+
+""" Calculates absolute winnings given decimal odds and bet size
+
+:param odds1, odds2: Decimal odds
+:type odds1, odds2: double
+:param bet_size: How much bet total
+:type bet_size: double
+:returns: Absolute winnings
+:rtype: double
+"""
+def calcWinnings(odds1, odds2, bet_size=100):
+    return round(bet_size * odds2 * odds1 / (odds1 + odds2), 2)
+
+
+""" Calculates percentage winnings given decimal odds
+
+:param odds1, odds2: Decimal odds for teams 
+:type odds1, odds2: double
+:returns: percentage winnings
+:rtype: double
+"""
+def calcWinningsP(odds1, odds2):
+    return round(odds2 * odds1 / (odds1 + odds2), 4)
+
+
+""" Calculates amount to bet in each website given total desired bet size and odds
+
+
+:param odds1, odds2: Decimal odds for each site in order of site (odds1 from site1, odds2 from site2) 
+:type odds1, odds2: double
+:param bet_size: Total desired bet size for entire match
+:type bet_size: double
+:returns: Amount to bet on each website respectively
+:rtype: 2-tuple (first element corresponds to bet on first website, and similarly for second)  
+"""
+def bet_amount(odds1, odds2, bet_size=100):
+    return round(bet_size * odds2 / (odds1 + odds2), 2), round(bet_size * odds1 / (odds1 + odds2), 2)
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print('Charlie! You should be able to see this.')
+    shouldBet((-200, 150), (-125, 120))
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
