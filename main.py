@@ -26,15 +26,15 @@ def shouldBet(site1, site2):
     # split if statement this way so that bet_amount always corresponds x[0] to site 1 and x[1] to site 2
     if 1 / odds1[0] + 1 / odds2[1] < 1:
         x = bet_amount(odds1[0], odds2[1])
-        print("If you bet $100, you should bet " + str(x[0]) + " in team 1 on site 1 and " + str(x[1]) + " in team 2 on"
-              + " site 2 for a " + str(calcWinnings(odds1[0], odds2[1])) + " dollar winning, which is a "
-              + str(calcWinningsP(odds1[0], odds2[1])) + "% increase.")
+        print("If you bet $500, you should bet " + str(x[0]) + " in team 1 on site 1 and " + str(x[1]) + " in team 2 on"
+              + " site 2 for a " + str(calc_profit(odds1[0], odds2[1])) + " dollar profit, which is a "
+              + str(calc_profit_p(odds1[0], odds2[1])) + "% increase.")
         return True
     elif 1 / odds1[1] + 1 / odds2[0] < 1:
         x = bet_amount(odds1[1], odds2[0])
-        print("If you bet $100, you should bet " + str(x[0]) + " in team 2 on site 1 and " + str(x[1]) + " in team 1 on"
-              + " site 2 for a " + str(calcWinnings(odds1[1], odds2[0])) + " dollar winning, which is a "
-              + str(calcWinningsP(odds1[1], odds2[0])) + "% increase.")
+        print("If you bet $500, you should bet " + str(x[0]) + " in team 2 on site 1 and " + str(x[1]) + " in team 1 on"
+              + " site 2 for a " + str(calc_profit(odds1[1], odds2[0])) + " dollar profit, which is a "
+              + str(calc_profit_p(odds1[1], odds2[0])) + "% increase.")
         return True
     return False
 
@@ -58,19 +58,19 @@ def calc_odds(money):
 :returns: Absolute winnings
 :rtype: double
 """
-def calcWinnings(odds1, odds2, bet_size=100):
-    return round(bet_size * odds2 * odds1 / (odds1 + odds2), 2)
+def calc_profit(odds1, odds2, bet_size=500):
+    return round(bet_size * odds2 * odds1 / (odds1 + odds2) - bet_size, 2)
 
 
 """ Calculates percentage winnings given decimal odds
 
 :param odds1, odds2: Decimal odds for teams 
 :type odds1, odds2: double
-:returns: percentage winnings
+:returns: percentage winnings * 100
 :rtype: double
 """
-def calcWinningsP(odds1, odds2):
-    return round(odds2 * odds1 / (odds1 + odds2), 4)
+def calc_profit_p(odds1, odds2):
+    return round((odds2 * odds1 / (odds1 + odds2) - 1)*100, 4)
 
 
 """ Calculates amount to bet in each website given total desired bet size and odds
@@ -83,7 +83,7 @@ def calcWinningsP(odds1, odds2):
 :returns: Amount to bet on each website respectively
 :rtype: 2-tuple (first element corresponds to bet on first website, and similarly for second)  
 """
-def bet_amount(odds1, odds2, bet_size=100):
+def bet_amount(odds1, odds2, bet_size=500):
     return round(bet_size * odds2 / (odds1 + odds2), 2), round(bet_size * odds1 / (odds1 + odds2), 2)
 
 
