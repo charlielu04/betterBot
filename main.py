@@ -86,6 +86,8 @@ def bet_amount(odds1, odds2, bet_size=100):
     return round(bet_size * odds2 / (odds1 + odds2), 2), round(bet_size * odds1 / (odds1 + odds2), 2)
 
 
+# Tested with Federer, Thiem example from https://www.us-odds.com/guides/arbitrage-betting
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     shouldBet((-200, 150), (-125, 120))
