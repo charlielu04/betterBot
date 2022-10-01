@@ -1,7 +1,11 @@
 from selenium import webdriver
+import time
 
-driver = webdriver.chrome
-PATH = "/Applications/chromedriver"
 
-driver = webdriver.Chrome(PATH)
+driver = webdriver.Chrome('C:/Program Files (x86)/chromedriver')  # Optional argument, if not specified will search path.
+
 driver.get("https://apple.com")
+print(driver.title)
+time.sleep(10)
+
+driver.quit()
