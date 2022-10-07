@@ -1,3 +1,5 @@
+from bs4 import BeautifulSoup
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
@@ -6,19 +8,21 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# scraping in background
+path = 'C:\Program Files (x86)\chromedriver.exe'
+url = 'https://sportsbook-nj.tipico.us/live'
+
 options = Options()
-options.headless = False
+options.headless = True
 options.add_argument("--start-maximized")
 
-web = 'https://sportsbook-nj.tipico.us/home'
-path = 'C:\Program Files (x86)\chromedriver.exe' #introduce your file's path inside '...'
-
-#execute chromedriver with edited options
 driver = webdriver.Chrome(path, options=options)
-driver.get(web)
 
-name = driver.find_element(By.XPATH, '//*[@id="app"]/div/div[2]/div/div/div[1]/div/main/div/div[1]/div/ul/li[1]/a/div/div[2]/div[1]/div[1]/div/span')
+# result = requests.get(url)
+# doc = BeautifulSoup(result.text, "html.parser")
+# print(doc.prettify())
 
-print(name)
-driver.quit()
+driver.get(url)
+time.sleep(3)
+page_source = driver.page_source
+soup = BeautifulSoup(page_source, 'html')
+print(soup.prettify())
