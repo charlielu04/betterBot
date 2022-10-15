@@ -47,12 +47,12 @@ def get_html(path, url):
                 title_arr[index] = str(team.contents[0])
                 index += 1
 
-        title = title_arr[0] + "/" + title_arr[1]
+        title = title_arr[0] + " | " + title_arr[1]
 
         bet_arr = [""] * 2
 
-        bet_arr[0] = str(bets[len(bets) - 2].contents[0])
-        bet_arr[1] = str(bets[len(bets) - 1].contents[0])
+        bet_arr[0] = int(str(bets[len(bets) - 2].contents[0]))
+        bet_arr[1] = int(str(bets[len(bets) - 1].contents[0]))
 
         all_games[title] = bet_arr
 
