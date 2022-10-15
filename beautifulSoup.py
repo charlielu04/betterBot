@@ -26,18 +26,50 @@ def get_html(path, url):
     soup = BeautifulSoup(page_source, 'html')
     # print(soup.prettify())
 
-    bets = soup.find_all("span", {"class": "sc-giYglK sc-kqnjJL fMUpmO eeEWlm"})
-    teams = soup.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi gRkMpx"})
-    teams2 = soup.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi emjYgw"})
+    # bets = soup.find_all("span", {"class": "sc-giYglK sc-kqnjJL fMUpmO eeEWlm"})
+    # teams = soup.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi gRkMpx"})
+    # teams2 = soup.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi emjYgw"})
+    #
+    # for team in teams:
+    #     print(team.contents)
+    # for team in teams2:
+    #     print(team.contents)
+    # for bet in bets:
+    #     print(bet.contents)
+    all_games = {}
+    games = soup.find_all("div", {"class": "sc-gLEhor dMmBXC"})
+    for game in games:
+        bets = game.find_all("div", {"class": "sc-czvZiG hxbcXJ"})
+        if len(bets) == 0:
+            continue
+        teams = game.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi gRkMpx"})
+        teams2 = game.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi emjYgw"})
+        bets = game.find_all("span", {"class": "sc-giYglK sc-kqnjJL fMUpmO eeEWlm"})
 
-    for team in teams:
-        print(team.contents)
-    for team in teams2:
-        print(team.contents)
-    for bet in bets:
-        print(bet.contents)
+        title_arr = [""] * 2
+        index = 0
+        if len(teams) > 0:
+            for team in teams:
+                title_arr[index] = team.contents[0]
+                index += 1
+        else:
+            for team in teams2:
+                title_arr[index] = team.contents[0]
+                index += 1
 
+        title = title_arr[0] + "/" + title_arr[1]
 
+        bet_arr = [""] * 2
+        index = 0
 
+        for bet in reversed(bets):
+            bet_arr[index] = bet.contents
+        bet_arr[1] = bets[len(bets)-1].contents[0]
+        bet_arr[0] = bets[len(bets) - 2].contents[0]
+
+        all_games[title] = bet_arr
+
+    for key, value in all_games.items():
+        print(key, ' : ', value)
 url = 'https://sportsbook-nj.tipico.us/today'
 get_html('/usr/local/bin/chromedriver', url)
