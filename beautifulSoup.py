@@ -26,16 +26,6 @@ def get_html(path, url):
     soup = BeautifulSoup(page_source, 'html')
     # print(soup.prettify())
 
-    # bets = soup.find_all("span", {"class": "sc-giYglK sc-kqnjJL fMUpmO eeEWlm"})
-    # teams = soup.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi gRkMpx"})
-    # teams2 = soup.find_all("span", {"class": "sc-giYglK fMUpmO sc-bBHHxi emjYgw"})
-    #
-    # for team in teams:
-    #     print(team.contents)
-    # for team in teams2:
-    #     print(team.contents)
-    # for bet in bets:
-    #     print(bet.contents)
     all_games = {}
     games = soup.find_all("div", {"class": "sc-gLEhor dMmBXC"})
     for game in games:
