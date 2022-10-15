@@ -60,5 +60,5 @@ def get_html(path, url):
         print(key, ' : ', value)
 
 
-url = 'https://sportsbook-nj.tipico.us/today'
-get_html('/usr/local/bin/chromedriver', url)
+website = 'https://sportsbook-nj.tipico.us/today'
+get_html('/usr/local/bin/chromedriver', website)
