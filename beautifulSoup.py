@@ -60,12 +60,9 @@ def get_html(path, url):
         title = title_arr[0] + "/" + title_arr[1]
 
         bet_arr = [""] * 2
-        index = 0
 
-        for bet in reversed(bets):
-            bet_arr[index] = bet.contents
-        bet_arr[1] = bets[len(bets)-1].contents[0]
         bet_arr[0] = bets[len(bets) - 2].contents[0]
+        bet_arr[1] = bets[len(bets) - 1].contents[0]
 
         all_games[title] = bet_arr
 
